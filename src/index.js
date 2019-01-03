@@ -11,10 +11,11 @@ class Square extends React.Component {
   //   this.state = {
   //     value: null,
   //   };
-  // }
+  // } 
+  /***이제 Square components는 controlled componnets가 된 것!****/
   render() {
     return (
-      <button className="square" onClick={() => this.props.onClick({value: 'X'})} 
+      <button className="square" onClick={() => this.props.onClick()} 
       //onClick을 상위 컴포넌트에서 props으로 받아서 사용
       >
         {this.props.value}
@@ -31,6 +32,19 @@ class Board extends React.Component {
       squares: Array(9).fill(null),
     };
   }
+
+  handleClick(i) {
+    //why slice? immutable
+    //1. Avoiding direct data mutation lets us keep previous versions 
+    //of the game’s history intact, and reuse them later.
+    //2. Detecting changes in immutable objects is considerably easier
+    //3. it helps you build pure components in React. Immutable data can easily determine 
+    //if changes have been made which helps to determine when a component requires re-rendering.
+    const squares = this.sate.squares.slice();
+    squares[i] = 'X';
+    this.setState({squares: squares});
+  }
+
   renderSquare(i) {
     return <Square 
     value={this.state.squares[i]}
