@@ -4,25 +4,38 @@ import './index.css';
 
 //하나의 button rendering
 class Square extends React.Component {
-  constructor(props) {
-    super(props);
-    //state를 가짐 밑에 설정했던 value i가 null값으로 초기세팅
-    this.state = {
-      value: null,
-    };
-  }
+  //lifting state up 했으니깐 더이상 핉요 X
+  // constructor(props) {
+  //   super(props);
+  //   //state를 가짐 밑에 설정했던 value i가 null값으로 초기세팅
+  //   this.state = {
+  //     value: null,
+  //   };
+  // }
   render() {
     return (
-      <button className="square" onClick={() => this.setState({value: 'X'})}>
-        {this.state.value}
+      <button className="square" onClick={() => this.props.onClick({value: 'X'})} 
+      //onClick을 상위 컴포넌트에서 props으로 받아서 사용
+      >
+        {this.props.value}
       </button>
     );
   }
 }
 //Board Component에 9개의 Squre rendering
 class Board extends React.Component {
+  //lifting state up from Square component
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
+  }
   renderSquare(i) {
-    return <Square value={i} />;
+    return <Square 
+    value={this.state.squares[i]}
+    onClick={() => this.handleClick(i)}
+    />;
   }
 
   render() {
