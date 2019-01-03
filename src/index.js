@@ -4,10 +4,17 @@ import './index.css';
 
 //하나의 button rendering
 class Square extends React.Component {
+  constructor(props) {
+    super(props);
+    //state를 가짐 밑에 설정했던 value i가 null값으로 초기세팅
+    this.state = {
+      value: null,
+    };
+  }
   render() {
     return (
-      <button className="square">
-        {this.props.value}
+      <button className="square" onClick={() => this.setState({value: 'X'})}>
+        {this.state.value}
       </button>
     );
   }
